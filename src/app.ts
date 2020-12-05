@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import httpRouter from './routes/http/api';
+import httpRouter from './routes/http';
 
 class App {
   express: express.Application;
