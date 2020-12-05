@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/main/server.ts"
+    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/server.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
