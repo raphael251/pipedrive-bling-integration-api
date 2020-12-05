@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import httpRouter from "./routes/http/api";
+import httpRouter from './routes/http/api';
 
 class App {
-  express: express.Application
+  express: express.Application;
 
   constructor() {
     this.express = express();
@@ -21,4 +21,4 @@ class App {
   }
 }
 
-export default new App().express
+export default new App().express;
