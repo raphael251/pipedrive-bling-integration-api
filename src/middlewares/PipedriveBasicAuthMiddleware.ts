@@ -2,24 +2,36 @@ import { Request, Response, NextFunction } from 'express';
 
 export class PipedriveBasicAuthMiddleware {
   static handle(req: Request, res: Response, next: NextFunction) {
-    const encryptedAuthHeader = req.headers.authorization;
-    if (!encryptedAuthHeader) return res.status(401).send();
-    if (!process.env.PIPEDRIVE_USERNAME || !process.env.PIPEDRIVE_PASS) {
-      return res.status(500).send();
-    }
-    const authHeader = Buffer.from(encryptedAuthHeader, 'base64').toString().split(' ');
-    const authHeaderType = authHeader[0];
-    const authHeaderValues = authHeader[1].split(':');
-    const pipedriveUsername = authHeaderValues[0];
-    const pipedrivePass = authHeaderValues[1];
+    try {
+      const encodedCredentials = this.validateAuthHeader(req.headers);
 
-    if (
-      authHeaderType !== 'Basic'
-      || pipedriveUsername !== process.env.PIPEDRIVE_USERNAME
-      || pipedrivePass !== process.env.PIPEDRIVE_PASS
-    ) {
+      if (!encodedCredentials) return res.status(401).send();
+      if (!process.env.PIPEDRIVE_USERNAME || !process.env.PIPEDRIVE_PASS) {
+        throw new Error('pipedrive auth env variables is not setted.');
+      }
+      const decodedCredentials = this.decodeCredentials(encodedCredentials);
+      const [pipedriveUsername, pipedrivePass] = decodedCredentials.split(':');
+
+      if (this.isCredentialsValid(pipedriveUsername, pipedrivePass)) return next();
+
       return res.status(401).send();
+    } catch (error) {
+      return res.status(500).send({});
     }
-    return next();
+  }
+
+  private static validateAuthHeader(authHeader: any): string | null {
+    if (!authHeader.authorization) return null;
+    const [authHeaderType, authHeaderContent] = authHeader.authorization.split(' ');
+    if (authHeaderType !== 'Basic') return null;
+    return authHeaderContent;
+  }
+
+  private static decodeCredentials(encodedAuthHeader: string): string {
+    return Buffer.from(encodedAuthHeader, 'base64').toString();
+  }
+
+  private static isCredentialsValid(userName: string, pass: string) {
+    return userName === process.env.PIPEDRIVE_USERNAME && pass === process.env.PIPEDRIVE_PASS;
   }
 }
