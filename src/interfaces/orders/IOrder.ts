@@ -4,6 +4,4 @@ export interface IOrder {
   clientName: string;
   value: number;
   currency: string;
-  previousStatus: string;
-  currentStatus: string;
 }
