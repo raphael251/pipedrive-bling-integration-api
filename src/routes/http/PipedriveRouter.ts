@@ -5,7 +5,7 @@ import { PipedriveBasicAuthMiddleware } from '../../middlewares/PipedriveBasicAu
 
 export const PipedriveRouter = Router().use(
   '/pipedrive',
-  PipedriveBasicAuthMiddleware.handle,
+  (req, res, next) => PipedriveBasicAuthMiddleware.handle(req, res, next),
   async (req, res) => {
     const request: IHttpRequest = {
       body: req.body,
