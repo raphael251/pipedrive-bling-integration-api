@@ -6,9 +6,8 @@ export class PipedriveController {
   async handle(req: IHttpRequest): Promise<IHttpResponse> {
     try {
       const orderPayload: IOrder = this.buildOrderPayload(req.body);
-      const { previousStatus, currentStatus } = orderPayload;
 
-      if (this.wasTheOrderStatusChangedToWon(previousStatus, currentStatus)) {
+      if (this.wasTheOrderStatusChangedToWon(req.body.previous.status, req.body.current.status)) {
         await new BlingOrdersManager().handle(orderPayload);
       }
 
@@ -26,8 +25,6 @@ export class PipedriveController {
       currency: requestBody.current.currency,
       clientName: requestBody.current.person_name,
       orgName: requestBody.current.org_name,
-      previousStatus: requestBody.previous.status,
-      currentStatus: requestBody.current.status,
     };
   }
 
