@@ -1,26 +1,17 @@
-import { IHttpRequest, IHttpResponse } from '../interfaces';
-import { BlingOrdersBuilder } from '../modules/bling/orders/BlingOrdersBuilder';
-
-type OrderPayload = {
-  value: number;
-  currency: string;
-  clientName: string;
-  orgName: string;
-  previousStatus: string;
-  currentStatus: string;
-};
+import { IHttpRequest, IHttpResponse } from '../interfaces/http';
+import { BlingOrdersManager } from '../modules/bling/orders/BlingOrdersManager';
+import { IOrder } from '../interfaces/orders/IOrder';
 
 export class PipedriveController {
   async handle(req: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const orderPayload: OrderPayload = this.buildOrderPayload(req.body);
+      const orderPayload: IOrder = this.buildOrderPayload(req.body);
       const { previousStatus, currentStatus } = orderPayload;
 
       if (this.wasTheOrderStatusChangedToWon(previousStatus, currentStatus)) {
-        await new BlingOrdersBuilder().handle(orderPayload);
+        await new BlingOrdersManager().handle(orderPayload);
       }
 
-      console.log(orderPayload);
       return { status: 200 };
     } catch (error) {
       console.log(error);
@@ -28,8 +19,9 @@ export class PipedriveController {
     }
   }
 
-  private buildOrderPayload(requestBody: any): OrderPayload {
+  private buildOrderPayload(requestBody: any): IOrder {
     return {
+      orderId: requestBody.current.id,
       value: requestBody.current.value,
       currency: requestBody.current.currency,
       clientName: requestBody.current.person_name,
@@ -40,6 +32,6 @@ export class PipedriveController {
   }
 
   private wasTheOrderStatusChangedToWon(previousStatus: string, currentStatus: string): boolean {
-    return orderPayload.previousStatus === 'open' && orderPayload.currentStatus === 'won';
+    return previousStatus === 'open' && currentStatus === 'won';
   }
 }
