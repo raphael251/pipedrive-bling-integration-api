@@ -3,13 +3,17 @@
     "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/server.ts"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.4",
-    "ngrok": "^3.3.0"
+    "ngrok": "^3.3.0",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.8",
     "@types/express": "^4.17.9",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
