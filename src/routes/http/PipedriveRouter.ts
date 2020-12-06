@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { PipedriveController } from '../../controllers/PipedriveController';
-import { IHttpRequest } from '../../interfaces';
+import { IHttpRequest } from '../../interfaces/http';
 import { PipedriveBasicAuthMiddleware } from '../../middlewares/PipedriveBasicAuthMiddleware';
 
 export const PipedriveRouter = Router().use(
