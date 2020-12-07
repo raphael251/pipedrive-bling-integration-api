@@ -4,21 +4,20 @@ import { OrderSchema } from '../schemas/orderSchema';
 
 export class OrderRepository implements IOrderRepository {
   async add(order: IOrder): Promise<IOrder> {
-    const addedOrder = await OrderSchema.create({
-      orderId: order.orderId,
-      orgName: order.orgName,
-      clientName: order.clientName,
-      value: order.value,
-      currency: order.currency,
-    });
+    const addedOrder = await OrderSchema.create(order);
     return addedOrder.toObject();
   }
 
-  findByOrderId(orderId: number): Promise<IOrder> {
-    return OrderSchema.findOne({ orderId }).lean();
+  async addMany(orders: Array<IOrder>): Promise<Array<IOrder>> {
+    const addedOrders = await OrderSchema.insertMany(orders);
+    return addedOrders.map((order) => order.toObject());
   }
 
-  find(): Promise<Array<IOrder>> {
-    return OrderSchema.find().lean();
+  async findByOrderId(orderId: string): Promise<IOrder> {
+    return (await OrderSchema.findOne({ orderId }).lean()) || {};
+  }
+
+  async find(): Promise<Array<IOrder>> {
+    return (await OrderSchema.find().lean()) || {};
   }
 }
