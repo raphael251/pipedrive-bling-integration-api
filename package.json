@@ -4,7 +4,7 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
-    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/server.ts",
+    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/infra/server.ts",
     "build": "tsc",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
