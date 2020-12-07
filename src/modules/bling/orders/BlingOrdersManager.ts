@@ -4,29 +4,8 @@ import { IOrder } from '../../../interfaces/orders/IOrder';
 
 export class BlingOrdersManager {
   async handle(order: IOrder): Promise<void> {
-    try {
-      const orderPayload = this.buildOrderPayload(order);
-      const result = await this.sendOrder(orderPayload);
-
-      console.log('\n\n\n');
-      console.log('PAPÓCA');
-      console.log('\n\n\n');
-      console.log({
-        data: result.data,
-        headers: result.headers,
-        status: result.status,
-        statusText: result.statusText,
-      });
-      console.log('\n\n\n');
-    } catch (error) {
-      console.log('ERRO', Object.keys(error));
-      console.log({
-        data: JSON.stringify(error.response.data),
-        headers: error.response.headers,
-        status: error.response.status,
-        statusText: error.response.statusText,
-      });
-    }
+    const orderPayload = this.buildOrderPayload(order);
+    await this.sendOrder(orderPayload);
   }
 
   private buildOrderPayload(order: IOrder): any {
@@ -130,7 +109,9 @@ export class BlingOrdersManager {
   private sendOrder(orderPayload: any): Promise<AxiosResponse<any>> {
     const requestUrl = `https://bling.com.br/Api/v2/pedido/json/?apikey=${process.env.BLING_API_KEY}`;
     const requestBody = `xml=${orderPayload}`;
-    const requestConfig = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
+    const requestConfig = {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    };
     return axios.post(requestUrl, requestBody, requestConfig);
   }
 }
