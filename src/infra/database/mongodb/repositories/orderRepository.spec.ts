@@ -93,7 +93,7 @@ describe('Test OrderRepository class', () => {
     );
   });
 
-  it('Should return an array with all orders when call the find method', async () => {
+  it('Should return an array with all orders grouped by day and total value when call the find method', async () => {
     const { sut } = makeSUT();
     const ordersParams: Array<IOrder> = [
       {
@@ -115,10 +115,13 @@ describe('Test OrderRepository class', () => {
     const response = await sut.find();
     expect(response).toEqual(
       expect.arrayContaining([
-        expect.objectContaining(ordersParams[0]),
-        expect.objectContaining(ordersParams[1]),
+        expect.objectContaining({
+          _id: expect.any(String),
+          totalValue: expect.any(Number),
+        }),
       ])
     );
+    // {"_id": "2020-12-07", "totalValue": 1501.98}
   });
 
   it('Should throw an exception if add throws', async () => {
