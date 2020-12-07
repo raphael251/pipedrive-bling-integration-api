@@ -1,9 +1,19 @@
 {
+  "name": "pipedrive-bling-integration-api",
+  "version": "1.0.0",
+  "main": "src/server.ts",
+  "license": "MIT",
   "scripts": {
-    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/server.ts"
+    "serve:dev": "ts-node-dev --inspect --ignore-watch node_modules --transpile-only src/server.ts",
+    "build": "tsc",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- --watch -c jestUnit.config.js",
+    "test:unit:verbose": "jest --passWithNoTests --noStackTrace --runInBand --watch -c jestUnit.config.js",
+    "test:coverage": "npm test -- --coverage",
+    "test:file": "jest --runTestsByPath"
   },
   "dependencies": {
-    "@types/mongoose": "^5.10.2",
     "axios": "^0.21.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -19,6 +29,7 @@
     "@types/cors": "^2.8.8",
     "@types/express": "^4.17.9",
     "@types/jest": "^26.0.16",
+    "@types/mongoose": "^5.10.2",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.15.0",
