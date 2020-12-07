@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose from 'mongoose';
 
 export class MongoDb {
   public static uri: string;
@@ -13,10 +13,5 @@ export class MongoDb {
 
   public static async disconnect(): Promise<void> {
     await mongoose.disconnect();
-  }
-
-  public static map(data: Document): any {
-    const { _id, ...document } = data.toObject();
-    return { id: _id, ...document };
   }
 }
