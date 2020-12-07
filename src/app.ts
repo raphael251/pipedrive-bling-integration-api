@@ -3,6 +3,7 @@ import cors from 'cors';
 import { resolve } from 'path';
 import dotenv from 'dotenv';
 import httpRouter from './routes/http';
+import { MongoDb } from './infra/database/mongodb/MongoDb';
 
 class App {
   express: express.Application;
@@ -10,6 +11,7 @@ class App {
   constructor() {
     this.dotEnv();
     this.express = express();
+    this.database();
     this.middlewares();
     this.routes();
   }
@@ -30,6 +32,14 @@ class App {
 
   private routes(): void {
     this.express.use(httpRouter);
+  }
+
+  private async database(): Promise<void> {
+    try {
+      await MongoDb.connect();
+    } catch (error) {
+      console.error('APP >> database:', error);
+    }
   }
 }
 
