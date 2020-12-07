@@ -1,13 +1,23 @@
 import { IHttpRequest, IHttpResponse } from '../interfaces/http';
 import { BlingOrdersManager } from '../modules/bling/orders/BlingOrdersManager';
 import { IOrder } from '../interfaces/orders/IOrder';
+import { IHttpController } from '../interfaces/http/IHttpController';
+import { IOrderRepository } from '../interfaces/repositories/IOrderRepository';
 
-export class PipedriveController {
+export class PipedriveController implements IHttpController {
+  constructor(private orderRepository: IOrderRepository) {}
+
   async handle(req: IHttpRequest): Promise<IHttpResponse> {
     try {
       const orderPayload: IOrder = this.buildOrderPayload(req.body);
 
-      if (this.wasTheOrderStatusChangedToWon(req.body.previous.status, req.body.current.status)) {
+      if (
+        this.wasTheOrderStatusChangedToWon(
+          req.body.previous.status,
+          req.body.current.status
+        )
+      ) {
+        await this.orderRepository.add(orderPayload);
         await new BlingOrdersManager().handle(orderPayload);
       }
 
@@ -28,7 +38,10 @@ export class PipedriveController {
     };
   }
 
-  private wasTheOrderStatusChangedToWon(previousStatus: string, currentStatus: string): boolean {
+  private wasTheOrderStatusChangedToWon(
+    previousStatus: string,
+    currentStatus: string
+  ): boolean {
     return previousStatus === 'open' && currentStatus === 'won';
   }
 }
