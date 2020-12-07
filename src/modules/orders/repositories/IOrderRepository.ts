@@ -1,4 +1,4 @@
-import { IOrder } from '../orders/IOrder';
+import { IOrder } from '../interfaces/IOrder';
 
 export interface IOrderRepository {
   add(orderParams: IOrder): Promise<IOrder>;

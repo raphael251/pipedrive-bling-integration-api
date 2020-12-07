@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { PipedriveController } from '../../controllers/PipedriveController';
-import { OrderRepository } from '../../infra/database/mongodb/repositories/OrderRepository';
-import { IHttpRequest } from '../../interfaces/http';
+import { OrderRepository } from '../../../../infra/database/mongodb/repositories/OrderRepository';
+import { IHttpRequest } from '../../../../shared/interfaces/http';
 import { PipedriveBasicAuthMiddleware } from '../../middlewares/PipedriveBasicAuthMiddleware';
 
 const router = Router();

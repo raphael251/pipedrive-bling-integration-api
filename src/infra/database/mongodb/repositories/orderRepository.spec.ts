@@ -1,7 +1,7 @@
 import { MongoDb } from '../MongoDb';
 import { OrderRepository } from './OrderRepository';
-import { IOrderRepository } from '../../../../interfaces/repositories/IOrderRepository';
-import { IOrder } from '../../../../interfaces/orders/IOrder';
+import { IOrder } from '../../../../modules/orders/interfaces/IOrder';
+import { IOrderRepository } from '../../../../modules/orders/repositories/IOrderRepository';
 
 function makeSUT(): { sut: IOrderRepository } {
   const sut = new OrderRepository();

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import xmlParser from 'xml-js';
-import { IOrder } from '../../../interfaces/orders/IOrder';
+import { IOrder } from '../../orders/interfaces/IOrder';
 
 export class BlingOrdersManager {
   async handle(order: IOrder): Promise<void> {

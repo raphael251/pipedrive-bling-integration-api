@@ -1,5 +1,5 @@
-import { IOrder } from '../../../../interfaces/orders/IOrder';
-import { IOrderRepository } from '../../../../interfaces/repositories/IOrderRepository';
+import { IOrder } from '../../../../modules/orders/interfaces/IOrder';
+import { IOrderRepository } from '../../../../modules/orders/repositories/IOrderRepository';
 import { OrderSchema } from '../schemas/orderSchema';
 
 export class OrderRepository implements IOrderRepository {

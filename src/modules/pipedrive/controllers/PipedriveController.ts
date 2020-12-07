@@ -1,8 +1,8 @@
-import { IHttpRequest, IHttpResponse } from '../interfaces/http';
-import { BlingOrdersManager } from '../modules/bling/orders/BlingOrdersManager';
-import { IOrder } from '../interfaces/orders/IOrder';
-import { IHttpController } from '../interfaces/http/IHttpController';
-import { IOrderRepository } from '../interfaces/repositories/IOrderRepository';
+import { IHttpRequest, IHttpResponse } from '../../../shared/interfaces/http';
+import { BlingOrdersManager } from '../../../modules/bling/orders/BlingOrdersManager';
+import { IOrder } from '../../orders/interfaces/IOrder';
+import { IHttpController } from '../../../shared/interfaces/http/IHttpController';
+import { IOrderRepository } from '../../orders/repositories/IOrderRepository';
 
 export class PipedriveController implements IHttpController {
   constructor(private orderRepository: IOrderRepository) {}

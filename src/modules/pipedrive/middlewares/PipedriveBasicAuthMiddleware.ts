@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
 export class PipedriveBasicAuthMiddleware {
-  static handle(req: Request, res: Response, next: NextFunction) {
+  static handle(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response<any> | void {
     try {
       const encodedCredentials = this.validateAuthHeader(req.headers);
 
@@ -12,7 +16,8 @@ export class PipedriveBasicAuthMiddleware {
       const decodedCredentials = this.decodeCredentials(encodedCredentials);
       const [pipedriveUsername, pipedrivePass] = decodedCredentials.split(':');
 
-      if (this.isCredentialsValid(pipedriveUsername, pipedrivePass)) return next();
+      if (this.isCredentialsValid(pipedriveUsername, pipedrivePass))
+        return next();
 
       return res.status(401).send();
     } catch (error) {
@@ -22,7 +27,9 @@ export class PipedriveBasicAuthMiddleware {
 
   private static validateAuthHeader(authHeader: any): string | null {
     if (!authHeader.authorization) return null;
-    const [authHeaderType, authHeaderContent] = authHeader.authorization.split(' ');
+    const [authHeaderType, authHeaderContent] = authHeader.authorization.split(
+      ' '
+    );
     if (authHeaderType !== 'Basic') return null;
     return authHeaderContent;
   }
@@ -32,6 +39,9 @@ export class PipedriveBasicAuthMiddleware {
   }
 
   private static isCredentialsValid(userName: string, pass: string) {
-    return userName === process.env.PIPEDRIVE_USERNAME && pass === process.env.PIPEDRIVE_PASS;
+    return (
+      userName === process.env.PIPEDRIVE_USERNAME &&
+      pass === process.env.PIPEDRIVE_PASS
+    );
   }
 }

@@ -2,8 +2,8 @@ import {
   IHttpController,
   IHttpRequest,
   IHttpResponse,
-} from '../interfaces/http';
-import { IOrderRepository } from '../interfaces/repositories/IOrderRepository';
+} from '../../../shared/interfaces/http';
+import { IOrderRepository } from '../repositories/IOrderRepository';
 
 export class OrdersController implements IHttpController {
   constructor(private orderRepository: IOrderRepository) {}

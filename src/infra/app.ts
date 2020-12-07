@@ -3,7 +3,7 @@ import cors from 'cors';
 import { resolve } from 'path';
 import dotenv from 'dotenv';
 import httpRouter from './routes/http';
-import { MongoDb } from './infra/database/mongodb/MongoDb';
+import { MongoDb } from './database/mongodb/MongoDb';
 
 class App {
   express: express.Application;

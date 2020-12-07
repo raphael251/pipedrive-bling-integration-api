@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { OrdersController } from '../../controllers/OrdersController';
-import { IHttpRequest } from '../../interfaces/http';
-import { OrderRepository } from '../../infra/database/mongodb/repositories/OrderRepository';
+import { IHttpRequest } from '../../../../shared/interfaces/http';
+import { OrderRepository } from '../../../../infra/database/mongodb/repositories/OrderRepository';
 
 const router = Router();
 
