@@ -18,6 +18,17 @@ export class OrderRepository implements IOrderRepository {
   }
 
   async find(): Promise<Array<IOrder>> {
-    return (await OrderSchema.find().lean()) || {};
+    return (
+      (await OrderSchema.aggregate([
+        {
+          $group: {
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+            totalValue: {
+              $sum: '$value',
+            },
+          },
+        },
+      ]).exec()) || []
+    );
   }
 }
