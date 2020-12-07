@@ -1,5 +1,5 @@
 export interface IOrder {
-  orderId: number;
+  orderId: string;
   orgName: string;
   clientName: string;
   value: number;
