@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { OrdersController } from '../../controllers/OrdersController';
 import { IHttpRequest } from '../../../../shared/interfaces/http';
 import { OrderRepository } from '../../../../infra/database/mongodb/repositories/OrderRepository';
@@ -17,13 +17,6 @@ router.get('/orders', async (req, res) => {
 });
 
 router.get('/orders/:orderId', async (req, res) => {
-  ordersDefaultHandler(req, res);
-});
-
-async function ordersDefaultHandler(
-  req: Request,
-  res: Response
-): Promise<void> {
   const request: IHttpRequest = {
     body: req.body,
     headers: req.headers,
@@ -32,6 +25,6 @@ async function ordersDefaultHandler(
   const orderRepository = new OrderRepository();
   const response = await new OrdersController(orderRepository).handle(request);
   res.status(response.status).send(response.body);
-}
+});
 
 export { router as OrdersRouter };
